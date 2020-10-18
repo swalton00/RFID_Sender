@@ -1,0 +1,28 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+}
+apply plugin: "groovy"
+apply plugin: "application"
+
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class' : 'com.spw.rfid.RFID_Reader'
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = "com.spw.rfid.RFID_Reader"
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.1.3'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    compile group: 'com.github.purejavacomm', name: 'purejavacomm', version: '1.0.2.RELEASE'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+}
