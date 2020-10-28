@@ -47,7 +47,7 @@ public class SocketManager extends Thread {
 
     @Override
     public void run() {
-        log.info("Starting the Socket Manager Thread");
+        log.debug("Starting the Socket Manager Thread");
         messageQueue = new LinkedBlockingQueue<byte[]>();
         qm = new QueueManager(messageQueue, clientList);
         qm.start();

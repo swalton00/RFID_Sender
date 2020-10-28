@@ -31,16 +31,16 @@ class ReaderClass extends Thread {
 
 
     public ReaderClass() {
-        logger.info("in the default constructor")
+        logger.trace("in the default constructor")
     }
 
     public ReaderClass(String comPort) {
-        logger.info("In the constructor with a String (port name) {}", comPort)
+        logger.debug("In the constructor with a String (port name) {}", comPort)
         setCommPort(comPort)
     }
 
     public ReaderClass(String comPort, int networkPort) {
-        logger.info("setting up for comPort {} and network port {}", comPort, networkPort)
+        logger.debug("setting up for comPort {} and network port {}", comPort, networkPort)
         this.networkPort = networkPort
         //setNetwork(networkPort)
         setCommPort(comPort)
@@ -104,7 +104,7 @@ class ReaderClass extends Thread {
     }
 
     void setNetwork(int port) {
-        logger.info("setting up for network port {}", port)
+        logger.debug("setting up for network port {}", port)
         //serverSocket = new ServerSocket(port)
     }
 
@@ -134,8 +134,8 @@ class ReaderClass extends Thread {
                 rawString = dataReceived
                 String newTag = returnTag(dataReceived)
                 newTag = newTag.substring(0, 10)
-                logger.debug("received a new tag of {}", newTag)
-                println("read a new tag ${newTag}")
+                logger.info("New tag -- {}", newTag)
+               // println("read a new tag ${newTag}")
                 ArrayList<String> tagReceived = new ArrayList<>()
                 tagReceived.add(newTag)
                 //  add the send here
@@ -191,7 +191,7 @@ public void setCommPort(String port) {
         if (comPort == null || networkPort == 0) {
             throw new Exception("Both Com Port and Network port must be specified")
         }
-        logger.info("setting up the serial port")
+        logger.debug("setting up the serial port")
         //msgQueue = new LinkedBlockingQueue<byte[]>()
         try {
             CommPortIdentifier cpi = CommPortIdentifier.getPortIdentifier(comPort)
@@ -199,7 +199,7 @@ public void setCommPort(String port) {
             serialPort.enableReceiveTimeout(20000)
             serialPort.enableReceiveThreshold(16)
             serialStream = serialPort.getInputStream()
-            logger.info("starting a reader on the Serial Port -- waiting for tags")
+            logger.debug("starting a reader on the Serial Port -- waiting for tags")
             serialPort.addEventListener([serialEvent: { event -> listener(event) }] as SerialPortEventListener)
             serialPort.notifyOnDataAvailable(true)
             logger.debug("serial port now setup")
@@ -220,7 +220,7 @@ public void setCommPort(String port) {
             logger.error("throwing an exception to force termination - this COM port failed")
             throw new RuntimeException("Error during initialization")
         }
-        logger.info("now accepting network connections")
+        logger.debug("now accepting network connections")
         clientManager = new SocketManager(networkPort, msgQueue)
         clientManager.start()
         /*socket = serverSocket.accept()

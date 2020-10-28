@@ -82,7 +82,7 @@ public class SocketSender extends Thread {
                     log.error("Error attempting output write, terminating", io);
                 }
             } catch (InterruptedException ie) {
-                log.info("SocketSender has been interrupted");
+                log.debug("SocketSender has been interrupted");
                 continueRunning = false;
             }
         }
@@ -92,7 +92,7 @@ public class SocketSender extends Thread {
             log.error("IO Exception closing network connection", io);
         }
         socketList.remove(selfId);
-        log.info("This socket has now terminated");
+        log.debug("This socket has now terminated");
     }
 
 }
