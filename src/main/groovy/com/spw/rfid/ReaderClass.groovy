@@ -204,16 +204,16 @@ public void setCommPort(String port) {
             serialPort.notifyOnDataAvailable(true)
             logger.debug("serial port now setup")
         } catch (NoSuchPortException nspe) {
-            logger.debug("No Such port for port {}", port)
+            logger.debug("No Such port for port {}", comPort)
             hadError = true
         } catch (PortInUseException) {
-            logger.debug("Port {} is already in use", port)
+            logger.debug("Port {} is already in use", comPort)
             hadError = true
         } catch (UnsupportedCommOperationException uco) {
-            logger.error("Unsupported comm operation thrown for port {}", port, uco)
+            logger.error("Unsupported comm operation thrown for port {}", comPort, uco)
             hadError = true
         } catch (Exception e) {
-            logger.error("Exception opening port {}", port, e)
+            logger.error("Exception opening port {}", comPort, e)
             hadError = true
         }
         if (hadError) {
